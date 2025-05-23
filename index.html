@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>타이레놀 복용 체크기</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background: #f8f8f8;
+      color: #333;
+    }
+    .step {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .step h2 {
+      margin-top: 0;
+    }
+    .result {
+      font-weight: bold;
+      margin-top: 10px;
+      color: darkred;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💊 타이레놀 복용 체크기</h1>
+
+  <div class="step">
+    <h2>1단계. 증상 체크</h2>
+    <label><input type="checkbox" name="symptom" value="fever"> 열이 나요</label><br>
+    <label><input type="checkbox" name="symptom" value="headache"> 두통이 있어요</label><br>
+    <label><input type="checkbox" name="symptom" value="period"> 생리통이 있어요</label><br>
+    <label><input type="checkbox" name="symptom" value="noneed"> 이유 없이 먹으려는 건 아니에요</label><br>
+    <div id="step1-warning" class="result"></div>
+  </div>
+
+  <div class="step">
+    <h2>2단계. 건강 상태 확인</h2>
+    <label><input type="checkbox" name="risk" value="liver"> 간 질환 있음</label><br>
+    <label><input type="checkbox" name="risk" value="kidney"> 신장 질환 있음</label><br>
+    <label><input type="checkbox" name="risk" value="blood"> 혈액 질환 있음</label><br>
+    <label><input type="checkbox" name="risk" value="meds"> 다른 약 복용 중</label><br>
+    <label><input type="checkbox" name="risk" value="age"> 나이 특이 (70세 이상 or 12세 이하)</label><br>
+  </div>
+
+  <div class="step">
+    <h2>3단계. 위험 징후 체크</h2>
+    <label><input type="checkbox" name="symptom2" value="vomit"> 심한 구토/복통</label><br>
+    <label><input type="checkbox" name="symptom2" value="rash"> 피부 발진</label><br>
+    <label><input type="checkbox" name="symptom2" value="breath"> 숨 가쁨</label><br>
+  </div>
+
+  <button onclick="checkResult()">결과 확인하기</button>
+  <div id="resultBox" class="step result"></div>
+
+  <div class="step">
+    <h2>4단계. 복용 팁</h2>
+    <ul>
+      <li>복용 간격은 <strong>4시간 이상</strong>!</li>
+      <li><strong>하루 3번 이상 복용 금지</strong></li>
+      <li>두 종류의 해열진통제 동시 복용 금지 (예: 타이레놀 + 이부프로펜)</li>
+    </ul>
+  </div>
+
+  <script>
+    function checkResult() {
+      const symptom = Array.from(document.querySelectorAll('input[name="symptom"]:checked')).map(el => el.value);
+      const risk = Array.from(document.querySelectorAll('input[name="risk"]:checked'));
+      const symptom2 = Array.from(document.querySelectorAll('input[name="symptom2"]:checked'));
+      const step1Warn = document.getElementById("step1-warning");
+      const resultBox = document.getElementById("resultBox");
+      
+      step1Warn.innerText = "";
+      resultBox.innerText = "";
+
+      if (symptom.includes("noneed")) {
+        step1Warn.innerText = "이 약은 필요할 때만 복용하세요.";
+      }
+
+      if (symptom2.length > 0) {
+        resultBox.innerText = "⚠️ 이런 증상은 병원 진료가 필요할 수 있습니다.";
+      } else if (risk.length > 0) {
+        resultBox.innerText = "❗ 복용 전 약사나 의사에게 확인하세요.";
+      } else {
+        resultBox.innerText = "✅ 복용해도 괜찮습니다. 설명서를 참고해주세요.";
+      }
+    }
+  </script>
+</body>
+</html>
