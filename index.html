@@ -1,101 +1,116 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>타이레놀 복용 체크기</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 20px;
-      background: #f8f8f8;
-      color: #333;
-    }
-    .step {
-      margin-bottom: 30px;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .step h2 {
-      margin-top: 0;
-    }
-    .result {
-      font-weight: bold;
-      margin-top: 10px;
-      color: darkred;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+    body { font-family: sans-serif; background: #f8f8f8; padding: 20px; color: #333; }
+    .step { margin-bottom: 30px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .step h2 { margin-top: 0; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    .hidden { display: none; }
+    .result { font-weight: bold; margin-top: 20px; font-size: 18px; }
   </style>
 </head>
 <body>
   <h1>💊 타이레놀 복용 체크기</h1>
 
-  <div class="step">
-    <h2>1단계. 증상 체크</h2>
-    <label><input type="checkbox" name="symptom" value="fever"> 열이 나요</label><br>
-    <label><input type="checkbox" name="symptom" value="headache"> 두통이 있어요</label><br>
-    <label><input type="checkbox" name="symptom" value="period"> 생리통이 있어요</label><br>
-    <label><input type="checkbox" name="symptom" value="noneed"> 이유 없이 먹으려는 건 아니에요</label><br>
-    <div id="step1-warning" class="result"></div>
+  <div class="step" id="step1">
+    <h2>1단계: 위험 징후 체크</h2>
+    <label><input type="checkbox" value="warn"> 심한 구토/복통</label><br>
+    <label><input type="checkbox" value="warn"> 피부에 붉은 발진</label><br>
+    <label><input type="checkbox" value="warn"> 숨이 차거나 호흡 곤란</label><br>
+    <label><input type="checkbox" value="warn"> 39도 이상의 고열이 2일 이상 지속</label><br>
+    <label><input type="checkbox" value="none"> 없음</label><br>
+    <button onclick="handleStep1()">다음</button>
   </div>
 
-  <div class="step">
-    <h2>2단계. 건강 상태 확인</h2>
-    <label><input type="checkbox" name="risk" value="liver"> 간 질환 있음</label><br>
-    <label><input type="checkbox" name="risk" value="kidney"> 신장 질환 있음</label><br>
-    <label><input type="checkbox" name="risk" value="blood"> 혈액 질환 있음</label><br>
-    <label><input type="checkbox" name="risk" value="meds"> 다른 약 복용 중</label><br>
-    <label><input type="checkbox" name="risk" value="age"> 나이 특이 (70세 이상 or 12세 이하)</label><br>
+  <div class="step hidden" id="step2">
+    <h2>2단계: 나이 확인</h2>
+    <label><input type="radio" name="age" value="under"> 만 11세 이하</label><br>
+    <label><input type="radio" name="age" value="over"> 만 12세 이상</label><br>
+    <button onclick="handleStep2()">다음</button>
   </div>
 
-  <div class="step">
-    <h2>3단계. 위험 징후 체크</h2>
-    <label><input type="checkbox" name="symptom2" value="vomit"> 심한 구토/복통</label><br>
-    <label><input type="checkbox" name="symptom2" value="rash"> 피부 발진</label><br>
-    <label><input type="checkbox" name="symptom2" value="breath"> 숨 가쁨</label><br>
+  <div class="step hidden" id="step3">
+    <h2>3단계: 증상 체크</h2>
+    <label><input type="checkbox" value="symptom"> 발열</label><br>
+    <label><input type="checkbox" value="symptom"> 감기로 인한 통증</label><br>
+    <label><input type="checkbox" value="symptom"> 두통</label><br>
+    <label><input type="checkbox" value="symptom"> 신경통/근육통/관절통</label><br>
+    <label><input type="checkbox" value="symptom"> 월경통</label><br>
+    <label><input type="checkbox" value="symptom"> 염좌통</label><br>
+    <label><input type="checkbox" value="symptom"> 치통</label><br>
+    <label><input type="checkbox" value="symptom"> 류마티양 통증</label><br>
+    <label><input type="checkbox" value="other"> 기타</label><br>
+    <button onclick="handleStep3()">다음</button>
   </div>
 
-  <button onclick="checkResult()">결과 확인하기</button>
-  <div id="resultBox" class="step result"></div>
+  <div class="step hidden" id="step4">
+    <h2>4단계: 건강 상태 확인</h2>
+    <label><input type="checkbox" value="warn"> 임부/수유부</label><br>
+    <label><input type="checkbox" value="warn"> 알코올 복용 중</label><br>
+    <label><input type="checkbox" value="warn"> 만성질환 있음</label><br>
+    <label><input type="checkbox" value="warn"> 소염진통제 복용 중</label><br>
+    <label><input type="checkbox" value="none"> 없음</label><br>
+    <button onclick="handleStep4()">결과 확인</button>
+  </div>
 
-  <div class="step">
-    <h2>4단계. 복용 팁</h2>
-    <ul>
-      <li>복용 간격은 <strong>4시간 이상</strong>!</li>
-      <li><strong>하루 3번 이상 복용 금지</strong></li>
-      <li>두 종류의 해열진통제 동시 복용 금지 (예: 타이레놀 + 이부프로펜)</li>
-    </ul>
+  <div class="step hidden" id="resultBox">
+    <h2>결과</h2>
+    <p class="result" id="resultText"></p>
   </div>
 
   <script>
-    function checkResult() {
-      const symptom = Array.from(document.querySelectorAll('input[name="symptom"]:checked')).map(el => el.value);
-      const risk = Array.from(document.querySelectorAll('input[name="risk"]:checked'));
-      const symptom2 = Array.from(document.querySelectorAll('input[name="symptom2"]:checked'));
-      const step1Warn = document.getElementById("step1-warning");
-      const resultBox = document.getElementById("resultBox");
-      
-      step1Warn.innerText = "";
-      resultBox.innerText = "";
+    function hideAll() {
+      document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
+    }
 
-      if (symptom.includes("noneed")) {
-        step1Warn.innerText = "이 약은 필요할 때만 복용하세요.";
-      }
-
-      if (symptom2.length > 0) {
-        resultBox.innerText = "⚠️ 이런 증상은 병원 진료가 필요할 수 있습니다.";
-      } else if (risk.length > 0) {
-        resultBox.innerText = "❗ 복용 전 약사나 의사에게 확인하세요.";
+    function handleStep1() {
+      const selected = Array.from(document.querySelectorAll('#step1 input[type=checkbox]:checked'));
+      if (selected.some(x => x.value === "warn")) {
+        showResult("이런 증상은 병원 진료가 필요할 수 있습니다.");
       } else {
-        resultBox.innerText = "✅ 복용해도 괜찮습니다. 설명서를 참고해주세요.";
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
       }
+    }
+
+    function handleStep2() {
+      const age = document.querySelector('input[name="age"]:checked');
+      if (!age) return alert("나이를 선택해주세요.");
+      if (age.value === "under") {
+        showResult("만 12세 이상부터 이 약을 복용할 수 있습니다.");
+      } else {
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.remove('hidden');
+      }
+    }
+
+    function handleStep3() {
+      const selected = Array.from(document.querySelectorAll('#step3 input[type=checkbox]:checked'));
+      if (selected.some(x => x.value === "other")) {
+        showResult("지금 이 약을 복용하는 것은 증상 개선에 도움이 되지 않습니다.");
+      } else {
+        document.getElementById('step3').classList.add('hidden');
+        document.getElementById('step4').classList.remove('hidden');
+      }
+    }
+
+    function handleStep4() {
+      const selected = Array.from(document.querySelectorAll('#step4 input[type=checkbox]:checked'));
+      if (selected.some(x => x.value === "warn")) {
+        showResult("복용 전 약사나 의사에게 상의하시기 바랍니다.");
+      } else {
+        showResult("‘타이레놀 500mg’을 복용해도 좋습니다. 아래 복용 방법을 꼭 준수해 주세요!\n1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.");
+      }
+    }
+
+    function showResult(msg) {
+      hideAll();
+      document.getElementById('resultText').innerText = msg;
+      document.getElementById('resultBox').classList.remove('hidden');
     }
   </script>
 </body>
