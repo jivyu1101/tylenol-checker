@@ -69,14 +69,19 @@
       border-radius: 6px;
     }
       .subhead {
-      display: block;
-      font-size: 24px;
-      margin-top: 5px;
+  display: block;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0;
+}
+      .mainhead {
+      font-size: 32px;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
-  <h1>💊 타이레놀<br><span class="subhead">복용 체크기</span></h1>
+  <h1><span class="mainhead">타이레놀</span><br><span class="subhead">복용 체크기</span></h1>
 
   <div class="step" id="step1">
     <h2>1단계: 위험 징후 체크</h2>
@@ -165,10 +170,10 @@
       if (selected.some(x => x.value === "warn")) {
         showResult("복용 전 약사나 의사에게 상의하시기 바랍니다.");
       } else {
-        showResult("‘타이레놀 500mg’을 복용해도 좋습니다. 아래 복용 방법을 꼭 준수해 주세요!
+        showResult(`‘타이레놀 500mg’을 복용해도 좋습니다. 아래 복용 방법을 꼭 준수해 주세요!
 <span class='dosage-highlight'>1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.</span>
 
-의사나 약사의 지시 없이 통증에 성인은 10일 이상, 소아는 5일 이상 복용하지 않고 발열에 3일 이상 복용하지 않습니다.");
+의사나 약사의 지시 없이 통증에 성인은 10일 이상, 소아는 5일 이상 복용하지 않고 발열에 3일 이상 복용하지 않습니다.`);
       }
     }
 
