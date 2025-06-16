@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
+  box-sizing: border-box;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,13 +27,15 @@
   word-break: keep-all;
 }
     .step {
-      margin: 30px auto;
-      background: white;
-      padding: 40px 60px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
-    }
+  margin: 30px auto;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  box-sizing: border-box;
+}
     .step h2 {
       margin-top: 0;
       color: #c62828;
@@ -68,14 +71,15 @@
       white-space: pre-wrap;
     }
     .dosage-highlight {
-      font-size: 22px;
-      color: #b71c1c;
-      background-color: #ffcdd2;
-      padding: 8px 12px;
-      display: inline-block;
-      margin-top: 12px;
-      border-radius: 6px;
-    }
+  font-size: 18px;
+  color: #b71c1c;
+  background-color: #ffcdd2;
+  padding: 8px 12px;
+  display: inline-block;
+  margin-top: 12px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
     .subhead {
   display: block;
   font-size: 32px;
@@ -91,7 +95,7 @@
   </style>
 </head>
 <body>
-  <h1><span class="mainhead">타이레놀</span><br><span class="subhead">복용 체크기</span></h1>
+  <h1><span class="mainhead">💊 타이레놀</span><br><span class="subhead">복용 체크기</span></h1>
 
   <div class="step" id="step1">
     <h2>1단계: 위험 징후 체크</h2>
