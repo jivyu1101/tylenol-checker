@@ -1,218 +1,179 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>타이레놀 복용 체크기</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타이레놀 복용 체크리스트</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      background: linear-gradient(to right, #b71c1c, #f44336);
-      padding: 40px 10px;
-      color: #333;
       margin: 0;
+      font-family: 'IBM Plex Sans KR', sans-serif;
+      background-color: #d62828;
+      color: #000;
     }
-    h1 {
+    .header {
       text-align: center;
-      margin-bottom: 30px;
-    }
-    .mainhead {
-      font-size: 36px;
-      font-weight: 700;
+      padding: 30px 20px 10px;
       color: white;
-      display: block;
+      font-size: 32px;
+      font-weight: bold;
     }
-    .subhead {
-      font-size: 22px;
-      font-weight: 500;
+    .subheader {
+      text-align: center;
       color: white;
-      display: block;
+      font-size: 18px;
+      margin-bottom: 20px;
     }
-    .step {
-      margin: 0 auto 30px;
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    .container {
       max-width: 600px;
-      width: 100%;
-      box-sizing: border-box;
+      margin: 0 auto 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .step h2 {
-      margin-top: 0;
-      color: #b71c1c;
-      border-bottom: 2px solid #ef9a9a;
-      padding-bottom: 10px;
+    .question-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #d62828;
+      margin-bottom: 10px;
     }
-    label {
-      display: block;
-      margin: 12px 0;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #b71c1c;
+    .question {
+      margin-bottom: 20px;
     }
     .hidden {
       display: none;
     }
-    .result {
+    .highlight-box {
+      background-color: #ffe5e5;
+      border-left: 5px solid red;
+      padding: 10px;
+      margin-top: 20px;
+    }
+    .red-text {
+      color: red;
       font-weight: bold;
-      font-size: 20px;
-      color: #d32f2f;
-      white-space: pre-wrap;
     }
-    .dosage-highlight {
-      font-size: 20px;
-      color: #d32f2f;
-      background-color: #ffebee;
-      padding: 8px 12px;
-      display: inline-block;
-      margin-top: 12px;
-      border-radius: 6px;
-      line-height: 1.3;
+    label {
+      display: block;
+      margin: 8px 0;
     }
-
-    @media (max-width: 600px) {
-      .step {
-        padding: 20px;
-        margin: 20px 10px;
-        box-sizing: border-box;
-      }
-      .mainhead {
-        font-size: 30px;
-      }
-      .subhead {
-        font-size: 18px;
-      }
-      .dosage-highlight {
-        font-size: 18px;
+    button {
+      background-color: #d62828;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    @media screen and (max-width: 640px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>
-    <span class="mainhead">타이레놀 💊</span>
-    <span class="subhead">복용 체크기</span>
-  </h1>
+  <div class="header">타이레놀 💊</div>
+  <div class="subheader">복용 체크기</div>
 
-  <div class="step" id="step1">
-    <h2>1단계: 위험 징후 체크</h2>
-    <label><input type="checkbox" value="warn"> 심한 구토/복통</label>
-    <label><input type="checkbox" value="warn"> 피부에 붉은 발진</label>
-    <label><input type="checkbox" value="warn"> 숨이 차거나 호흡 곤란</label>
-    <label><input type="checkbox" value="warn"> 39도 이상의 고열이 2일 이상 지속</label>
-    <label><input type="checkbox" value="none"> 없음</label>
-    <button onclick="handleStep1()">다음</button>
-  </div>
+  <div class="container">
+    <form id="survey">
+      <div id="q1" class="question">
+        <div class="question-title">1단계: 위험 징후 체크</div>
+        <label><input type="checkbox" name="danger" value="warn"> 심한 구토/복통</label>
+        <label><input type="checkbox" name="danger" value="warn"> 피부에 붉은 발진</label>
+        <label><input type="checkbox" name="danger" value="warn"> 숨이 차거나 호흡 곤란</label>
+        <label><input type="checkbox" name="danger" value="warn"> 39도 이상의 고열이 2일 이상 지속</label>
+        <label><input type="checkbox" name="danger" value="ok"> 없음</label>
+      </div>
 
-  <div class="step hidden" id="step2">
-    <h2>2단계: 나이 확인</h2>
-    <label><input type="radio" name="age" value="under"> 만 11세 이하</label>
-    <label><input type="radio" name="age" value="over"> 만 12세 이상</label>
-    <button onclick="handleStep2()">다음</button>
-  </div>
+      <div id="q2" class="question hidden">
+        <div class="question-title">2단계: 연령 확인</div>
+        <label><input type="radio" name="age" value="under"> 만 11세 이하</label>
+        <label><input type="radio" name="age" value="over"> 만 12세 이상</label>
+      </div>
 
-  <div class="step hidden" id="step3">
-    <h2>3단계: 증상 체크</h2>
-    <label><input type="checkbox" value="symptom"> 발열</label>
-    <label><input type="checkbox" value="symptom"> 감기로 인한 통증</label>
-    <label><input type="checkbox" value="symptom"> 두통</label>
-    <label><input type="checkbox" value="symptom"> 신경통/근육통/관절통</label>
-    <label><input type="checkbox" value="symptom"> 월경통</label>
-    <label><input type="checkbox" value="symptom"> 염좌통</label>
-    <label><input type="checkbox" value="symptom"> 치통</label>
-    <label><input type="checkbox" value="symptom"> 류마티양 통증</label>
-    <label><input type="checkbox" value="other"> 기타</label>
-    <button onclick="handleStep3()">다음</button>
-  </div>
+      <div id="q3" class="question hidden">
+        <div class="question-title">3단계: 증상 체크</div>
+        <label><input type="checkbox" name="symptom" value="valid"> 발열</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 감기로 인한 통증</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 두통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 신경통/근육통/관절통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 월경통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 염좌통(삔 통증)</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 치통</label>
+        <label><input type="checkbox" name="symptom" value="valid"> 류마티양으로 인한 통증</label>
+        <label><input type="checkbox" name="symptom" value="invalid"> 기타</label>
+      </div>
 
-  <div class="step hidden" id="step4">
-    <h2>4단계: 건강 상태 확인</h2>
-    <label><input type="checkbox" value="warn"> 임부/수유부</label>
-    <label><input type="checkbox" value="warn"> 알코올 복용 중</label>
-    <label><input type="checkbox" value="warn"> 만성질환 있음</label>
-    <label><input type="checkbox" value="warn"> 소염진통제 복용 중</label>
-    <label><input type="checkbox" value="none"> 없음</label>
-    <button onclick="handleStep4()">결과 확인</button>
-  </div>
+      <div id="q4" class="question hidden">
+        <div class="question-title">4단계: 건강 상태 확인</div>
+        <label><input type="checkbox" name="health" value="warn"> 임부/수유부</label>
+        <label><input type="checkbox" name="health" value="warn"> 알코올 복용 여부</label>
+        <label><input type="checkbox" name="health" value="warn"> 만성질환</label>
+        <label><input type="checkbox" name="health" value="warn"> 소염(항염)진통제 복용 여부</label>
+        <label><input type="checkbox" name="health" value="ok"> 없음</label>
+      </div>
 
-  <div class="step hidden" id="resultBox">
-    <h2>결과</h2>
-    <p class="result" id="resultText"></p>
+      <div id="result" class="question hidden">
+        <div class="highlight-box">
+          <p class="red-text">‘타이레놀 500mg’을 복용해도 좋습니다.</p>
+          <p class="red-text">1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.</p>
+        </div>
+        <p>의사나 약사의 지시 없이 통증에 성인(만 19세 이상)은 10일 이상, 소아(만 19세 미만)는 5일 이상 복용하지 않고, 발열에 3일 이상 복용하지 않습니다.</p>
+      </div>
+
+      <div id="ending" class="question hidden">
+        <p>이런 증상은 병원 진료가 필요할 수 있습니다.</p>
+      </div>
+
+      <button type="button" onclick="nextStep()">다음</button>
+    </form>
   </div>
 
   <script>
-    function hideAll() {
-      document.querySelectorAll('.step').forEach(el => el.classList.add('hidden'));
-    }
+    let step = 1;
 
-    function handleStep1() {
-      const selected = Array.from(document.querySelectorAll('#step1 input[type=checkbox]:checked'));
-      if (selected.some(x => x.value === "warn")) {
-        showResult("이런 증상은 병원 진료가 필요할 수 있습니다.");
-      } else {
-        document.getElementById('step1').classList.add('hidden');
-        document.getElementById('step2').classList.remove('hidden');
+    function nextStep() {
+      if (step === 1) {
+        const danger = [...document.querySelectorAll('input[name="danger"]:checked')];
+        if (danger.some(d => d.value === "warn")) return showEnding();
+        document.getElementById('q1').classList.add('hidden');
+        document.getElementById('q2').classList.remove('hidden');
+        step++;
+
+      } else if (step === 2) {
+        const age = document.querySelector('input[name="age"]:checked');
+        if (!age) return;
+        if (age.value === "under") return showEnding("만 12세 이상부터 이 약을 복용할 수 있습니다");
+        document.getElementById('q2').classList.add('hidden');
+        document.getElementById('q3').classList.remove('hidden');
+        step++;
+
+      } else if (step === 3) {
+        const symptoms = [...document.querySelectorAll('input[name="symptom"]:checked')];
+        if (symptoms.some(s => s.value === "invalid")) return showEnding("지금 이 약을 복용하는 것은 증상 개선에 도움이 되지 않습니다");
+        if (symptoms.length === 0) return;
+        document.getElementById('q3').classList.add('hidden');
+        document.getElementById('q4').classList.remove('hidden');
+        step++;
+
+      } else if (step === 4) {
+        const health = [...document.querySelectorAll('input[name="health"]:checked')];
+        if (health.some(h => h.value === "warn")) return showEnding("복용 전 약사나 의사에게 상의하시기 바랍니다");
+        document.getElementById('q4').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.querySelector('button').classList.add('hidden');
       }
     }
 
-    function handleStep2() {
-      const age = document.querySelector('input[name="age"]:checked');
-      if (!age) return alert("나이를 선택해주세요.");
-      if (age.value === "under") {
-        showResult("만 12세 이상부터 이 약을 복용할 수 있습니다.");
-      } else {
-        document.getElementById('step2').classList.add('hidden');
-        document.getElementById('step3').classList.remove('hidden');
-      }
-    }
-
-    function handleStep3() {
-      const selected = Array.from(document.querySelectorAll('#step3 input[type=checkbox]:checked'));
-      if (selected.some(x => x.value === "other")) {
-        showResult("지금 이 약을 복용하는 것은 증상 개선에 도움이 되지 않습니다.");
-      } else {
-        document.getElementById('step3').classList.add('hidden');
-        document.getElementById('step4').classList.remove('hidden');
-      }
-    }
-
-    function handleStep4() {
-      const selected = Array.from(document.querySelectorAll('#step4 input[type=checkbox]:checked'));
-      if (selected.some(x => x.value === "warn")) {
-        showResult("복용 전 약사나 의사에게 상의하시기 바랍니다.");
-      } else {
-        showResult(`
-          <div style="color: black; font-size: 15px; line-height: 1.6; margin-bottom: 10px;">
-            ‘타이레놀 500mg’을 복용해도 좋습니다. 아래 복용 방법을 꼭 준수해 주세요!
-          </div>
-          <span class='dosage-highlight'>1회 1~2정씩 1일 3-4회 (4-6시간 마다) 복용하세요.</span>
-          <div style="color: black; font-size: 15px; line-height: 1.6; margin-top: 20px;">
-            의사나 약사의 지시 없이 통증에 성인(만 19세 이상)은 10일 이상,<br>
-            소아(만 19세 미만)는 5일 이상 복용하지 않고,<br>
-            발열에 3일 이상 복용하지 않습니다.
-          </div>
-        `);
-      }
-    }
-
-    function showResult(msg) {
-      hideAll();
-      document.getElementById('resultText').innerHTML = msg;
-      document.getElementById('resultBox').classList.remove('hidden');
+    function showEnding(msg) {
+      document.getElementById('survey').innerHTML = `<div class='question'><p>${msg || '이런 증상은 병원 진료가 필요할 수 있습니다.'}</p></div>`;
     }
   </script>
 </body>
